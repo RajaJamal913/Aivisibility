@@ -1,0 +1,32 @@
+version: "3.9"
+
+# Single-service compose using SQLite (persisted via a named volume) to keep
+# `docker-compose up` a true one-command start with zero external
+# dependencies. To use Postgres instead, uncomment the `db` service below
+# and set DATABASE_URL=postgresql://ai_visibility:ai_visibility@db:5432/ai_visibility
+services:
+  api:
+    build: .
+    ports:
+      - "5000:5000"
+    env_file:
+      - .env
+    environment:
+      DATABASE_URL: sqlite:////data/dev.db
+    volumes:
+      - sqlite_data:/data
+
+  # db:
+  #   image: postgres:16-alpine
+  #   environment:
+  #     POSTGRES_USER: ai_visibility
+  #     POSTGRES_PASSWORD: ai_visibility
+  #     POSTGRES_DB: ai_visibility
+  #   ports:
+  #     - "5432:5432"
+  #   volumes:
+  #     - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  sqlite_data:
+  # postgres_data:

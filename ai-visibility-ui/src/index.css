@@ -1,0 +1,56 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    @apply scroll-smooth;
+  }
+  body {
+    @apply bg-bg dark:bg-bg-dark text-ink dark:text-ink-dark font-body antialiased;
+  }
+  h1, h2, h3, h4 {
+    @apply font-display;
+  }
+  *:focus-visible {
+    @apply outline-none ring-2 ring-signal-500 ring-offset-2 ring-offset-bg dark:ring-offset-bg-dark;
+  }
+}
+
+@layer utilities {
+  /* Loading state doubles as the product's own metaphor: a radar sweep
+     scanning left to right, standing in for "checking visibility" instead
+     of a generic gray pulse. */
+  .skeleton-sweep {
+    background-image: linear-gradient(
+      100deg,
+      theme('colors.border.DEFAULT') 30%,
+      theme('colors.signal.100') 45%,
+      theme('colors.sweep.400' / 35%) 50%,
+      theme('colors.signal.100') 55%,
+      theme('colors.border.DEFAULT') 70%
+    );
+    background-size: 250% 100%;
+  }
+  .dark .skeleton-sweep {
+    background-image: linear-gradient(
+      100deg,
+      theme('colors.border.dark') 30%,
+      theme('colors.signal.700' / 40%) 45%,
+      theme('colors.sweep.500' / 25%) 50%,
+      theme('colors.signal.700' / 40%) 55%,
+      theme('colors.border.dark') 70%
+    );
+    background-size: 250% 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
